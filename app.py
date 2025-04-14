@@ -180,6 +180,3 @@ def list_flightemployees():
 
 if __name__ =='__main__':
     app.run(debug=True)
-=======
-
->>>>>>> fd26e9ecfc60e385169980c8d844d8025166c1c8

@@ -221,15 +221,7 @@
         </div>
         
         <div class="form-content">
-            <form id="airportForm">
-                <div class="form-group">
-                    <label for="airportId">Airport ID</label>
-                    <div class="input-wrapper">
-                        <i data-lucide="hash"></i>
-                        <input type="text" id="airportId" name="airportId" placeholder="Enter airport ID" required>
-                    </div>
-                </div>
-                
+            <form id="airportForm" action="/add_airport" method="POST">
                 <div class="form-group">
                     <label for="name">Airport Name</label>
                     <div class="input-wrapper">
@@ -250,7 +242,7 @@
                     <label for="contactNo">Contact Number</label>
                     <div class="input-wrapper">
                         <i data-lucide="phone"></i>
-                        <input type="tel" id="contactNo" name="contactNo" placeholder="Enter contact number" required>
+                        <input type="tel" id="contactno" name="contactno" placeholder="Enter contact number" required>
                     </div>
                 </div>
                 
@@ -271,33 +263,6 @@
         // Initialize Lucide icons
         document.addEventListener('DOMContentLoaded', function() {
             lucide.createIcons();
-        });
-        
-        // Form submission
-        document.getElementById('airportForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const airportId = document.getElementById('airportId').value;
-            const name = document.getElementById('name').value;
-            const city = document.getElementById('city').value;
-            const contactNo = document.getElementById('contactNo').value;
-            const address = document.getElementById('address').value;
-            
-            // Display collected data (for demonstration)
-            console.log({
-                airportId,
-                name,
-                city,
-                contactNo,
-                address
-            });
-            
-            // Show success message
-            alert('Airport information submitted successfully!');
-            
-            // Reset the form
-            this.reset();
         });
     </script>
 </body>

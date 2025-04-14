@@ -143,15 +143,7 @@
       <h1>Passenger Information</h1>
     </div>
 
-    <form id="passengerForm" action="/submitPassengerInfo" method="post">
-      <div class="form-group">
-        <label for="passengerid">Passenger ID</label>
-        <div class="input-wrapper">
-          <i data-lucide="id-card"></i>
-          <input type="text" id="passengerid" name="passengerid" required />
-        </div>
-      </div>
-
+    <form id="passengerForm" action="/add_passenger" method="post">
       <div class="form-group">
         <label for="name">Name</label>
         <div class="input-wrapper">
@@ -172,7 +164,7 @@
         <label for="contactnumber">Contact Number</label>
         <div class="input-wrapper">
           <i data-lucide="phone"></i>
-          <input type="tel" id="contactnumber" name="contactnumber" required />
+          <input type="tel" id="contactno" name="contactno" required />
         </div>
       </div>
 
@@ -186,21 +178,6 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       lucide.createIcons();
-    });
-
-    document.getElementById('passengerForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const data = {
-        passengerId: document.getElementById('passengerid').value,
-        name: document.getElementById('name').value,
-        address: document.getElementById('address').value,
-        contactNumber: document.getElementById('contactnumber').value
-      };
-
-      console.log(data);
-      alert('Passenger information submitted successfully!');
-      this.reset();
     });
   </script>
 </body>

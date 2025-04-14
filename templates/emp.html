@@ -214,15 +214,8 @@
         </div>
 
         <div class="form-content">
-            <form id="employeeForm">
-                <div class="form-group">
-                    <label for="employeeId">Employee ID</label>
-                    <div class="input-wrapper">
-                        <i data-lucide="badge-check"></i>
-                        <input type="text" id="employeeId" name="employeeId" placeholder="Enter employee ID" required>
-                    </div>
-                </div>
-
+            <form id="employeeForm" action="/add_employee" method="POST">
+                
                 <div class="form-group">
                     <label for="name">Full Name</label>
                     <div class="input-wrapper">
@@ -243,7 +236,7 @@
                     <label for="contactNo">Contact Number</label>
                     <div class="input-wrapper">
                         <i data-lucide="phone"></i>
-                        <input type="tel" id="contactNo" name="contactNo" placeholder="Enter contact number" required>
+                        <input type="tel" id="contactno" name="contactno" placeholder="Enter contact number" required>
                     </div>
                 </div>
 
@@ -265,30 +258,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             lucide.createIcons();
         });
-
-        // Form submission handler
-        document.getElementById('employeeForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const employeeId = document.getElementById('employeeId').value;
-            const name = document.getElementById('name').value;
-            const designation = document.getElementById('designation').value;
-            const contactNo = document.getElementById('contactNo').value;
-            const address = document.getElementById('address').value;
-
-            // Log to console (demo)
-            console.log({
-                employeeId,
-                name,
-                designation,
-                contactNo,
-                address
-            });
-
-            alert('Employee information submitted successfully!');
-            this.reset();
-        });
-   
     </script>
 </body>
 </html>

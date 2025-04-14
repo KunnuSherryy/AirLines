@@ -143,15 +143,7 @@
       <h1>Plane Information</h1>
     </div>
 
-    <form id="planeInfoForm" action="/submitPlaneInfo" method="post">
-      <div class="form-group">
-        <label for="planeid">Plane ID</label>
-        <div class="input-wrapper">
-          <i data-lucide="airplane"></i>
-          <input type="text" id="planeid" name="planeid" required />
-        </div>
-      </div>
-
+    <form id="planeInfoForm" action="/add_plane" method="post">
       <div class="form-group">
         <label for="capacity">Capacity</label>
         <div class="input-wrapper">
@@ -180,7 +172,7 @@
         <label for="licensenumber">License Number</label>
         <div class="input-wrapper">
           <i data-lucide="shield"></i>
-          <input type="text" id="licensenumber" name="licensenumber" required />
+          <input type="text" id="licenseno" name="licenseno" required />
         </div>
       </div>
 
@@ -194,22 +186,6 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       lucide.createIcons();
-    });
-
-    document.getElementById('planeInfoForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const data = {
-        planeId: document.getElementById('planeid').value,
-        capacity: document.getElementById('capacity').value,
-        modelType: document.getElementById('modeltype').value,
-        manufacturer: document.getElementById('manufacturer').value,
-        licenseNumber: document.getElementById('licensenumber').value
-      };
-
-      console.log(data);
-      alert('Plane information submitted successfully!');
-      this.reset();
     });
   </script>
 </body>

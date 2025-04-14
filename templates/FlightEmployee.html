@@ -138,7 +138,7 @@
       <h1>Flight Employee Assignment</h1>
     </div>
 
-    <form id="flightEmployeeForm" action="/submitFlightEmployee" method="post">
+    <form id="flightEmployeeForm" action="/add_flightemployee" method="post">
       <div class="form-group">
         <label for="flightid">Flight ID</label>
         <div class="input-wrapper">
@@ -187,22 +187,6 @@
       document.getElementById('assignmentdate').value = today;
     });
 
-    document.getElementById('flightEmployeeForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const data = {
-        flightId: document.getElementById('flightid').value,
-        employeeId: document.getElementById('employeeid').value,
-        assignmentDate: document.getElementById('assignmentdate').value,
-        role: document.getElementById('role').value
-      };
-
-      console.log(data);
-      alert('Flight employee assignment submitted successfully!');
-      this.reset();
-      document.getElementById('assignmentdate').value = new Date().toISOString().split('T')[0];
-      lucide.createIcons();
-    });
   </script>
 </body>
 </html>

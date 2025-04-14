@@ -143,15 +143,7 @@
       <h1>Flight Schedule</h1>
     </div>
 
-    <form id="flightForm" action="/submitFlightSchedule" method="post">
-      <div class="form-group">
-        <label for="scheduleid">Schedule ID</label>
-        <div class="input-wrapper">
-          <i data-lucide="calendar"></i>
-          <input type="text" id="scheduleid" name="scheduleid" required />
-        </div>
-      </div>
-
+    <form id="flightForm" action="/add_flightschedule" method="post">
       <div class="form-group">
         <label for="flightid">Flight ID</label>
         <div class="input-wrapper">
@@ -186,21 +178,6 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       lucide.createIcons();
-    });
-
-    document.getElementById('flightForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const data = {
-        scheduleId: document.getElementById('scheduleid').value,
-        flightId: document.getElementById('flightid').value,
-        planeId: document.getElementById('planeid').value,
-        date: document.getElementById('date').value
-      };
-
-      console.log(data);
-      alert('Flight schedule submitted successfully!');
-      this.reset();
     });
   </script>
 </body>

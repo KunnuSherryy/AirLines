@@ -137,15 +137,7 @@
       <h1>Booking Information</h1>
     </div>
 
-    <form id="bookingForm" action="/submitBooking" method="post">
-      <div class="form-group">
-        <label for="bookingid">Booking ID</label>
-        <div class="input-wrapper">
-          <i data-lucide="hash"></i>
-          <input type="text" id="bookingid" name="bookingid" required />
-        </div>
-      </div>
-
+    <form id="bookingForm" action="/add_booking" method="POST">
       <div class="form-group">
         <label for="passengerid">Passenger ID</label>
         <div class="input-wrapper">
@@ -166,7 +158,7 @@
         <label for="seatnumber">Seat Number</label>
         <div class="input-wrapper">
           <i data-lucide="chair"></i>
-          <input type="text" id="seatnumber" name="seatnumber" required />
+          <input type="text" id="seatno" name="seatno" required />
         </div>
       </div>
 
@@ -192,24 +184,6 @@
       // Set today's date
       const today = new Date().toISOString().split('T')[0];
       document.getElementById('bookingdate').value = today;
-    });
-
-    document.getElementById('bookingForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const data = {
-        bookingId: document.getElementById('bookingid').value,
-        passengerId: document.getElementById('passengerid').value,
-        scheduleId: document.getElementById('scheduleid').value,
-        seatNumber: document.getElementById('seatnumber').value,
-        bookingDate: document.getElementById('bookingdate').value
-      };
-
-      console.log(data);
-      alert('Booking information submitted successfully!');
-      this.reset();
-      document.getElementById('bookingdate').value = new Date().toISOString().split('T')[0];
-      lucide.createIcons();
     });
   </script>
 </body>

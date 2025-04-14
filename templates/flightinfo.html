@@ -143,15 +143,7 @@
       <h1>Flight Information</h1>
     </div>
 
-    <form id="flightInfoForm" action="/submitFlightInfo" method="post">
-      <div class="form-group">
-        <label for="flightid">Flight ID</label>
-        <div class="input-wrapper">
-          <i data-lucide="airplane"></i>
-          <input type="text" id="flightid" name="flightid" required />
-        </div>
-      </div>
-
+    <form id="flightInfoForm" action="/add_flight" method="post">
       <div class="form-group">
         <label for="sourceairportid">Source Airport ID</label>
         <div class="input-wrapper">
@@ -204,22 +196,7 @@
       lucide.createIcons();
     });
 
-    document.getElementById('flightInfoForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const data = {
-        flightId: document.getElementById('flightid').value,
-        sourceAirportId: document.getElementById('sourceairportid').value,
-        destinationAirportId: document.getElementById('destinationairportid').value,
-        arrivalTime: document.getElementById('arrivaltime').value,
-        departureTime: document.getElementById('departuretime').value,
-        fair: document.getElementById('fair').value
-      };
-
-      console.log(data);
-      alert('Flight information submitted successfully!');
-      this.reset();
-    });
+    
   </script>
 </body>
 </html>

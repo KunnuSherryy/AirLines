@@ -1,7 +1,15 @@
 from flask_bcrypt import Bcrypt
 from pymongo import MongoClient
+import os
 
 bcrypt = Bcrypt()
+
+MONGO_URI = os.getenv("MONGO_URI")
+print(f"Loaded MONGO_URI: {MONGO_URI}")
+client = MongoClient(MONGO_URI)
+db = client['AirPlanes']
+users_collection = db['users']
+
 
 class UserModel:
     def __init__(self, db):

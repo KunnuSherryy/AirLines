@@ -1,34 +1,40 @@
-from flask import Blueprint, render_template, request, redirect, url_for
-from werkzeug.security import generate_password_hash
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
+from werkzeug.security import generate_password_hash, check_password_hash
 from pymongo import MongoClient
+import os
+from dotenv import load_dotenv
 
-# Initialize blueprint
+load_dotenv()
+
 auth_bp = Blueprint('auth', __name__)
 
-# MongoDB connection
-client = MongoClient("mongodb://localhost:27017/")
-db = client["abc_airline_db"]
-user_collection = db["users"]
+# MongoDB connection using Atlas URI
+MONGO_URI = os.getenv("MONGO_URI")
+print(f"Loaded MONGO_URI: {MONGO_URI}")
+client = MongoClient(MONGO_URI)
+db = client['AirPlanes']
+users_collection = db['users']
 
-# Route for signup page
+# SIGNUP
 @auth_bp.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        # Get form data from the signup form
         full_name = request.form['fullname']
         email = request.form['email']
         phone = request.form['phone']
         password = request.form['new-password']
         confirm_password = request.form['confirm-password']
 
-        # Check if passwords match
         if password != confirm_password:
-            return "Passwords do not match. Please try again."
+            flash("Passwords do not match!", "error")
+            return redirect(url_for('auth.signup'))
 
-        # Hash the password for security
-        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+        if users_collection.find_one({'email': email}):
+            flash("Email already exists. Please use a different email.", "error")
+            return redirect(url_for('auth.signup'))
 
-        # Insert data into MongoDB (User model)
+        hashed_password = generate_password_hash(password)
+
         user = {
             "full_name": full_name,
             "email": email,
@@ -36,47 +42,27 @@ def signup():
             "password": hashed_password
         }
 
-        # Insert the user into the collection
-        result = user_collection.insert_one(user)
+        users_collection.insert_one(user)
+        flash("Signup successful! Please log in.", "success")
+        return redirect(url_for('auth.login'))
 
-        # Handle the response
-        if result.inserted_id:
-            return redirect(url_for('view.home'))  # Redirect to login page after successful signup
-        else:
-            return "Error during signup. Please try again."
+    return render_template('signup.html')
 
-    return render_template('signup.html')  # Render the signup form if GET request
-
-# Route for the login page (redirect after successful signup)
-@auth_bp.route('/login')
+# LOGIN
+@auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        user = users_collection.find_one({'email': email})
+
+        if user and check_password_hash(user['password'], password):
+            session['user'] = user['email']
+            flash("Login successful!", "success")
+            return redirect(url_for('view.home'))  # Adjust if your home route is different
+        else:
+            flash("Invalid email or password", "error")
+            return redirect(url_for('auth.login'))
+
     return render_template('login.html')
-
-
-# blueprints/airports.py (Airport data blueprint)
-from flask import Blueprint, jsonify
-from pymongo import MongoClient
-
-# Initialize blueprint
-airport_bp = Blueprint('airport', __name__)
-
-# MongoDB connection
-client = MongoClient("mongodb://localhost:27017/")
-db = client["abc_airline_db"]
-
-# Route for viewing airports
-@airport_bp.route('/')
-def view_airports():
-    try:
-        # Assuming we store airport data in MongoDB instead of Supabase
-        airports = list(db.airports.find({}, {'_id': 0}))  # Exclude MongoDB ObjectId
-        return jsonify(airports)
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-
-# Directory structure for templates:
-# templates/
-#   auth/
-#     signup.html
-#     login.html

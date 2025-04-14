@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | ABC Airlines Reservation System</title>
+    <link rel="stylesheet" href="css/auth.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="signup">
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="loading-text">loading...</div>
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
+        </div>
+    </div>
+    
+    <div class="page-container">
+        <div class="background-image"></div>
+        
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        
+        <a href="index.html" class="home-button">
+            <i class="fas fa-home"></i>
+        </a>
+        
+        <div class="auth-container">
+            <div class="auth-header">
+                <h1>AIRLINE RESERVATION SYSTEM</h1>
+            </div>
+            
+            <div class="auth-form-container">
+                <form action="#" method="post" class="auth-form">
+                    <h2>Create Account</h2>
+                    
+                    <div class="form-group">
+                        <label for="fullname">Full Name</label>
+                        <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="new-password">Password</label>
+                        <input type="password" id="new-password" name="new-password" placeholder="Create a password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+                    </div>
+                    
+                    <div class="form-options">
+                        <div class="terms-agreement">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <label for="terms">I agree to the <a href="#">Terms & Conditions</a></label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">Sign Up</button>
+                    
+                    <div class="auth-links">
+                        <p>Already have an account? <a href="login.html">Log In</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Preloader
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function() {
+                    preloader.style.display = 'none';
+                    
+                    // Animate form elements after preloader disappears
+                    const formElements = document.querySelectorAll('.form-group, .btn-submit, .auth-links');
+                    formElements.forEach((element, index) => {
+                        setTimeout(() => {
+                            element.classList.add('fade-in');
+                        }, 100 * index);
+                    });
+                }, 500);
+            }, 3000); // Show preloader for 3 seconds to match the animation duration
+        });
+    </script>
+</body>
+</html> 

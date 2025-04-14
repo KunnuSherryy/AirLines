@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <style>
+    .airplane-body { fill: #1a73e8; }
+    .wing { fill: #4285f4; }
+    .window { fill: #e8f0fe; stroke: #0c3b7c; stroke-width: 2; }
+    .shadow { fill: rgba(0, 0, 0, 0.1); }
+    .cloud { fill: rgba(255, 255, 255, 0.9); }
+  </style>
+  
+  <!-- Clouds in Background -->
+  <path class="cloud" d="M90,140 a40,40 0 1,0 80,0 a40,40 0 1,0 -80,0 M130,110 a30,30 0 1,0 60,0 a30,30 0 1,0 -60,0 M170,140 a35,35 0 1,0 70,0 a35,35 0 1,0 -70,0" />
+  <path class="cloud" d="M590,100 a35,35 0 1,0 70,0 a35,35 0 1,0 -70,0 M620,80 a25,25 0 1,0 50,0 a25,25 0 1,0 -50,0 M650,100 a30,30 0 1,0 60,0 a30,30 0 1,0 -60,0" />
+  <path class="cloud" d="M200,400 a45,45 0 1,0 90,0 a45,45 0 1,0 -90,0 M240,370 a35,35 0 1,0 70,0 a35,35 0 1,0 -70,0 M290,400 a40,40 0 1,0 80,0 a40,40 0 1,0 -80,0" />
+  
+  <!-- Airplane shadow -->
+  <ellipse class="shadow" cx="400" cy="500" rx="200" ry="30" />
+  
+  <!-- Airplane body -->
+  <path class="airplane-body" d="M200,300 C180,290 180,310 200,300 L350,250 C380,240 380,260 350,250 L200,300 Z" />
+  <path class="airplane-body" d="M350,250 L600,250 C630,250 650,270 650,300 S630,350 600,350 L350,350 C320,350 320,250 350,250 Z" />
+  <path class="airplane-body" d="M600,350 L650,400 C670,420 650,440 630,420 L600,350 Z" />
+  
+  <!-- Airplane wings -->
+  <path class="wing" d="M400,350 L350,450 C340,470 380,470 400,450 L450,350 L400,350 Z" />
+  <path class="wing" d="M450,250 L550,150 C570,140 580,180 560,190 L450,250 Z" />
+  
+  <!-- Windows -->
+  <circle class="window" cx="380" cy="280" r="10" />
+  <circle class="window" cx="420" cy="280" r="10" />
+  <circle class="window" cx="460" cy="280" r="10" />
+  <circle class="window" cx="500" cy="280" r="10" />
+  <circle class="window" cx="540" cy="280" r="10" />
+  <circle class="window" cx="580" cy="280" r="10" />
+  
+  <!-- Cockpit -->
+  <path class="window" d="M350,270 L300,290 L300,310 L350,330 L350,270 Z" />
+</svg> 

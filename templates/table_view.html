@@ -1,72 +1,733 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>{{ table_name }}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: #f5f5f5;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            background-color: rgba(25, 25, 25, 0.85);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            margin-top: 80px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .table {
+            color: #f5f5f5;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 8px;
+            overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+            animation-delay: 0.3s;
+            animation-fill-mode: both;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .table-striped>tbody>tr:nth-of-type(odd) {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .table-striped>tbody>tr:nth-of-type(even) {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        thead tr {
+            background-color: #252525;
+            color: #fff;
+        }
+
+        .table th {
+            border-color: #333;
+            padding: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .table td {
+            border-color: #333;
+            padding: 12px 16px;
+            vertical-align: middle;
+        }
+
+        .table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .table tbody tr:hover {
+            background-color: rgba(76, 175, 255, 0.1) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .action-btn {
+            padding: 6px 14px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            margin: 0 4px;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .delete-btn {
+            background-color: rgba(220, 53, 69, 0.8);
+        }
+
+        .delete-btn:hover {
+            background-color: rgba(220, 53, 69, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.4);
+            color: white;
+        }
+
+        .update-btn {
+            background-color: rgba(255, 193, 7, 0.8);
+        }
+
+        .update-btn:hover {
+            background-color: rgba(255, 193, 7, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255, 193, 7, 0.4);
+            color: white;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #4ca5ff, #b673f8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 3s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .btn-custom {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            margin: 5px;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .add-btn {
+            background: linear-gradient(135deg, #2ecc71, #1abc9c);
+            color: white;
+        }
+
+        .add-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(46, 204, 113, 0.4);
+            background: linear-gradient(135deg, #27ae60, #16a085);
+            color: white;
+        }
+
+        .home-btn {
+            background: linear-gradient(135deg, #4ca5ff, #1f76c5);
+            color: white;
+        }
+
+        .home-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(76, 165, 255, 0.4);
+            background: linear-gradient(135deg, #3b8ee6, #1a65a8);
+            color: white;
+        }
+
+        /* Airplane Animation */
+        .airplane {
+            position: absolute;
+            top: 5%;
+            left: -150px;
+            width: 120px;
+            height: 120px;
+            z-index: 1;
+            opacity: 0.7;
+            filter: drop-shadow(0 4px 20px rgba(255, 255, 255, 0.7));
+            animation: fly 30s linear infinite;
+        }
+
+        @keyframes fly {
+            0% {
+                left: -150px;
+                top: 5%;
+                transform: rotate(15deg);
+            }
+
+            25% {
+                top: 30%;
+                transform: rotate(0deg);
+            }
+
+            50% {
+                top: 10%;
+                transform: rotate(-15deg);
+            }
+
+            75% {
+                top: 25%;
+                transform: rotate(0deg);
+            }
+
+            100% {
+                left: calc(100% + 150px);
+                top: 20%;
+                transform: rotate(15deg);
+            }
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0.3;
+            }
+
+            100% {
+                opacity: 0.8;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .buttons-container {
+                margin-top: 15px;
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .container {
+                padding: 15px;
+                margin-top: 40px;
+            }
+
+            .table th,
+            .table td {
+                padding: 10px;
+            }
+        }
+
+        /* Enhanced Responsive Styles */
+
+        /* Base responsive container adjustments */
+        @media (max-width: 991px) {
+            .container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            .title {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Tablet adjustments */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .buttons-container {
+                display: flex;
+                flex-wrap: wrap;
+                width: 100%;
+                gap: 10px;
+            }
+
+            .btn-custom {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+
+            .table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .action-buttons {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .action-btn {
+                width: 100%;
+                text-align: center;
+                margin: 0;
+            }
+
+            .airplane {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+        /* Mobile phone adjustments */
+        @media (max-width: 576px) {
+            .container {
+                width: 95%;
+                padding: 15px 10px;
+                margin-top: 20px;
+            }
+
+            .title {
+                font-size: 1.5rem;
+            }
+
+            .btn-custom {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+                width: 100%;
+                margin: 3px 0;
+            }
+
+            .buttons-container {
+                width: 100%;
+            }
+
+            .home-btn,
+            .add-btn {
+                width: 100%;
+            }
+
+            .table th,
+            .table td {
+                padding: 8px 6px;
+                font-size: 0.85rem;
+            }
+
+            .table thead th {
+                position: sticky;
+                top: 0;
+                background-color: #252525;
+                z-index: 10;
+            }
+
+            /* Table adjustments for very small screens */
+            .table-responsive-stack td,
+            .table-responsive-stack th {
+                display: block;
+                text-align: left;
+                width: 100%;
+            }
+
+            .table-responsive-stack tr {
+                display: block;
+                margin-bottom: 1rem;
+                border-bottom: 1px solid #333;
+            }
+
+            .table-responsive-stack td:before {
+                content: attr(data-label);
+                font-weight: bold;
+                display: inline-block;
+                width: 40%;
+            }
+
+            .airplane {
+                width: 60px;
+                height: 60px;
+            }
+
+            /* Optimize animations for mobile to save battery */
+            @keyframes fly {
+                0% {
+                    left: -80px;
+                    transform: rotate(10deg);
+                }
+
+                100% {
+                    left: calc(100% + 80px);
+                    transform: rotate(10deg);
+                }
+            }
+
+            /* Reduce star count for better performance */
+            .stars .star:nth-child(odd) {
+                display: none;
+            }
+        }
+
+        /* Small screen stacked responsive table JavaScript enhancement */
+        @media (max-width: 480px) {
+            .table-responsive-sm {
+                overflow-x: visible;
+            }
+
+            .title {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* For very small screens */
+        @media (max-width: 360px) {
+            .container {
+                padding: 10px 5px;
+            }
+
+            .title {
+                font-size: 1.1rem;
+            }
+
+            .table th,
+            .table td {
+                padding: 6px 4px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Add this JavaScript to make tables responsive on mobile */
+        /* Empty table styling */
+        .empty-table-container {
+            background-color: rgba(30, 30, 30, 0.6);
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            margin: 30px 0;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .empty-table-message {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #aaaaaa;
+        }
+
+        .empty-table-message h3 {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.6rem;
+            color: #f5f5f5;
+            font-weight: 500;
+        }
+
+        .empty-table-message p {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            max-width: 400px;
+        }
+
+        .empty-icon {
+            fill: none;
+            stroke: #4ca5ff;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            opacity: 0.8;
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+        }
+
+        /* Responsive adjustments for empty state */
+        @media (max-width: 576px) {
+            .empty-table-container {
+                padding: 30px 15px;
+            }
+
+            .empty-table-message h3 {
+                font-size: 1.3rem;
+            }
+
+            .empty-table-message p {
+                font-size: 0.95rem;
+            }
+
+            .empty-icon {
+                width: 48px;
+                height: 48px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-<div class="container mt-5">
-    <h2 class="mb-4">{{ table_name }}</h2>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            {% for key in rows[0].keys() %}
-                <th>{{ key }}</th>
-            {% endfor %}
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-            {% for row in rows %}
-            <tr>
-              {% for key, value in row.items() %}
-                <td>{{ value }}</td>
-              {% endfor %}
-              <td>
+    <!-- Stars background -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Flying airplane animation -->
+    <div class="airplane">
+        <svg viewBox="0 0 24 24" fill="#ffffff">
+            <path d="M22,16.21V15M10.4,2.7c0,0-0.029,0.898,0.518,1.511c0.547,0.613,1.186,1.408,1.186,1.408l5.443,6.12
+            c0,0,0.988,1.227,1.49,1.651C19.538,13.814,20.294,14,21.3,14c1.006,0,3.5-2.581,0.397-2.581
+            c-3.103,0-12.875,0-12.875,0s-1.516-0.06-2.078-0.262c-0.562-0.202-1.014-0.597-1.014-0.989
+            c0-0.462,0.451-0.856,1.014-1.058c0.562-0.202,2.078-0.262,2.078-0.262l8.365,0.001
+            c0,0-7.257-8.16-8.293-9.32c-0.773-0.868-0.77-1.830-0.055-2.457
+            C9.556-3.81,10.4-0.5,10.4,2.7z" />
+        </svg>
+    </div>
+
+    <div class="container">
+        <div class="header-container">
+            <h2 class="title">{{ table_name }}</h2>
+            <div class="buttons-container">
+                <a href="/home" class="btn btn-custom home-btn">
+                    <i class="fas fa-home"></i> Home
+                </a>
                 {% if table_name == 'Airports' %}
-                  <a href="/delete/airport/{{ row['airportid'] }}">Delete</a>
+                <a href="/add_airport" class="btn btn-custom add-btn">Add Airport</a>
                 {% elif table_name == 'Employees' %}
-                  <a href="/delete/employee/{{ row['employeeid'] }}">Delete</a>
+                <a href="/add_employee" class="btn btn-custom add-btn">Add Employee</a>
                 {% elif table_name == 'Planes' %}
-                  <a href="/delete/plane/{{ row['planeid'] }}">Delete</a>
+                <a href="/add_plane" class="btn btn-custom add-btn">Add Plane</a>
                 {% elif table_name == 'Flights' %}
-                  <a href="/delete/flight/{{ row['flightid'] }}">Delete</a>
+                <a href="/add_flight" class="btn btn-custom add-btn">Add Flight</a>
                 {% elif table_name == 'Passengers' %}
-                  <a href="/delete/passenger/{{ row['passengerid'] }}">Delete</a>
+                <a href="/add_passenger" class="btn btn-custom add-btn">Add Passenger</a>
                 {% elif table_name == 'Flight Schedules' %}
-                  <a href="/delete/flightschedule/{{ row['scheduleid'] }}">Delete</a>
+                <a href="/add_flightschedule" class="btn btn-custom add-btn">Add Flight Schedule</a>
                 {% elif table_name == 'Bookings' %}
-                  <a href="/delete/booking/{{ row['bookingid'] }}">Delete</a>
+                <a href="/add_booking" class="btn btn-custom add-btn">Add Booking</a>
                 {% elif table_name == 'Flight Employees' %}
-                  <a href="/delete/flightemployee/{{ row['flightemployeeid'] }}">Delete</a>
+                <a href="/add_flightemployee" class="btn btn-custom add-btn">Add Flight Employee</a>
                 {% endif %}
-              </td>
-              <td>
-                {% if table_name == 'Airports' %}
-                  <a href="/update/airport/{{ row['airportid'] }}">Update</a>
-                {% elif table_name == 'Employees' %}
-                  <a href="/update/employee/{{ row['employeeid'] }}">Update</a>
-                {% elif table_name == 'Planes' %}
-                  <a href="/update/plane/{{ row['planeid'] }}">Update</a>
-                {% elif table_name == 'Flights' %}
-                  <a href="/update/flight/{{ row['flightid'] }}">Update</a>
-                {% elif table_name == 'Passengers' %}
-                  <a href="/update/passenger/{{ row['passengerid'] }}">Update</a>
-                {% elif table_name == 'Flight Schedules' %}
-                  <a href="/update/flightschedule/{{ row['scheduleid'] }}">Update</a>
-                {% elif table_name == 'Bookings' %}
-                  <a href="/update/booking/{{ row['bookingid'] }}">Update</a>
-                {% elif table_name == 'Flight Employees' %}
-                  <a href="/update/flightemployee/{{ row['flightemployeeid'] }}">Update</a>
-                {% endif %}
-              </td>
-              
-            </tr>
-          {% endfor %}
-          
-        </tbody>
-    </table>
-</div>
+            </div>
+        </div>
+
+        {% if rows and rows|length > 0 %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    {% for key in rows[0].keys() %}
+                    <th>{{ key }}</th>
+                    {% endfor %}
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                <tr>
+                    {% for key, value in row.items() %}
+                    <td>{{ value }}</td>
+                    {% endfor %}
+                    <td>
+                        <div class="action-buttons">
+                            {% if table_name == 'Airports' %}
+                            <a href="/update/airport/{{ row['airportid'] }}" class="action-btn update-btn">Update</a>
+                            <a href="/delete/airport/{{ row['airportid'] }}" class="action-btn delete-btn">Delete</a>
+                            {% elif table_name == 'Employees' %}
+                            <a href="/update/employee/{{ row['employeeid'] }}" class="action-btn update-btn">Update</a>
+                            <a href="/delete/employee/{{ row['employeeid'] }}" class="action-btn delete-btn">Delete</a>
+                            {% elif table_name == 'Planes' %}
+                            <a href="/update/plane/{{ row['planeid'] }}" class="action-btn update-btn">Update</a>
+                            <a href="/delete/plane/{{ row['planeid'] }}" class="action-btn delete-btn">Delete</a>
+                            {% elif table_name == 'Flights' %}
+                            <a href="/update/flight/{{ row['flightid'] }}" class="action-btn update-btn">Update</a>
+                            <a href="/delete/flight/{{ row['flightid'] }}" class="action-btn delete-btn">Delete</a>
+                            {% elif table_name == 'Passengers' %}
+                            <a href="/update/passenger/{{ row['passengerid'] }}"
+                                class="action-btn update-btn">Update</a>
+                            <a href="/delete/passenger/{{ row['passengerid'] }}"
+                                class="action-btn delete-btn">Delete</a>
+                            {% elif table_name == 'Flight Schedules' %}
+                            <a href="/update/flightschedule/{{ row['scheduleid'] }}"
+                                class="action-btn update-btn">Update</a>
+                            <a href="/delete/flightschedule/{{ row['scheduleid'] }}"
+                                class="action-btn delete-btn">Delete</a>
+                            {% elif table_name == 'Bookings' %}
+                            <a href="/update/booking/{{ row['bookingid'] }}" class="action-btn update-btn">Update</a>
+                            <a href="/delete/booking/{{ row['bookingid'] }}" class="action-btn delete-btn">Delete</a>
+                            {% elif table_name == 'Flight Employees' %}
+                            <a href="/update/flightemployee/{{ row['flightemployeeid'] }}"
+                                class="action-btn update-btn">Update</a>
+                            <a href="/delete/flightemployee/{{ row['flightemployeeid'] }}"
+                                class="action-btn delete-btn">Delete</a>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-table-container">
+            <div class="empty-table-message">
+                <svg class="empty-icon" viewBox="0 0 24 24" width="64" height="64">
+                    <path
+                        d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" />
+                    <path d="M12 9V7M12 17v-6" />
+                </svg>
+                <h3>No data available</h3>
+                <p>There are currently no entries in the {{ table_name }} table.</p>
+                <p>Use the "Add" button above to create new entries.</p>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <!-- Script for star animation -->
+    <script>
+        // Create stars in the background
+        const starsContainer = document.getElementById('stars');
+        const starsCount = 100;
+
+        for (let i = 0; i < starsCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+
+            // Random position
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100;
+
+            // Random size
+            const size = Math.random() * 3;
+
+            // Random animation delay
+            const delay = Math.random() * 5;
+
+            star.style.left = `${posX}%`;
+            star.style.top = `${posY}%`;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.animationDelay = `${delay}s`;
+
+            starsContainer.appendChild(star);
+        }
+        // Add this script at the bottom of your HTML, before the closing </body> tag
+        document.addEventListener('DOMContentLoaded', function () {
+            // Add data-label attributes to table cells for mobile view
+            const table = document.querySelector('.table');
+            const thArray = table.querySelectorAll('thead th');
+            const trArray = table.querySelectorAll('tbody tr');
+
+            trArray.forEach(tr => {
+                const tdArray = tr.querySelectorAll('td');
+                for (let i = 0; i < tdArray.length - 1; i++) { // Skip the Actions column
+                    if (thArray[i]) {
+                        tdArray[i].setAttribute('data-label', thArray[i].textContent.trim());
+                    }
+                }
+            });
+
+            // Add responsive table class when screen is small
+            function checkScreenSize() {
+                if (window.innerWidth <= 480) {
+                    table.classList.add('table-responsive-stack');
+                } else {
+                    table.classList.remove('table-responsive-stack');
+                }
+            }
+
+            // Initial check
+            checkScreenSize();
+
+            // Check on resize
+            window.addEventListener('resize', checkScreenSize);
+        });
+    </script>
 </body>
+
 </html>

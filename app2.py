@@ -33,7 +33,7 @@ def add_airport():
             "address": request.form['address']
         }
         supabase.table('airport').insert(data).execute()
-        return redirect(url_for('list_airports'))
+        return redirect(url_for('view.list_airports'))
     return render_template('airport.html')
 
 @view.route('/airports')
@@ -53,7 +53,7 @@ def add_employee():
             "contactno": request.form['contactno']
         }
         supabase.table('employee').insert(data).execute()
-        return redirect(url_for('list_employees'))
+        return redirect(url_for('view.list_employees'))
     return render_template('emp.html')
 
 @view.route('/employees')
@@ -72,7 +72,7 @@ def add_plane():
             "licenseno": request.form['licenseno']
         }
         supabase.table('plane').insert(data).execute()
-        return redirect(url_for('list_planes'))
+        return redirect(url_for('view.list_planes'))
     return render_template('planeinfo.html')
 
 @view.route('/planes')
@@ -93,7 +93,7 @@ def add_flight():
             "fair": float(request.form['fair'])
         }
         supabase.table('flight').insert(data).execute()
-        return redirect(url_for('list_flights'))
+        return redirect(url_for('view.list_flights'))
     return render_template('flightinfo.html')
 
 @view.route('/flights')
@@ -112,7 +112,7 @@ def add_passenger():
             "contactno": request.form['contactno']
         }
         supabase.table('passenger').insert(data).execute()
-        return redirect(url_for('list_passengers'))
+        return redirect(url_for('view.list_passengers'))
     return render_template('passengerinfo.html')
 
 @view.route('/passengers')
@@ -131,7 +131,7 @@ def add_flightschedule():
             "date": request.form['date']
         }
         supabase.table('flightschedule').insert(data).execute()
-        return redirect(url_for('list_flightschedules'))
+        return redirect(url_for('view.list_flightschedules'))
     return render_template('flightschedule.html')
 
 @view.route('/flightschedules')
@@ -152,7 +152,7 @@ def add_booking():
             "bookingdate": request.form['bookingdate']
         }
         supabase.table('booking').insert(data).execute()
-        return redirect(url_for('list_bookings'))
+        return redirect(url_for('view.list_bookings'))
     return render_template('booking.html')
 
 @view.route('/bookings')
@@ -173,7 +173,7 @@ def add_flightemployee():
             "role": request.form['role']
         }
         supabase.table('flightemployee').insert(data).execute()
-        return redirect(url_for('list_flightemployees'))
+        return redirect(url_for('view.list_flightemployees'))
     return render_template('FlightEmployee.html')
 
 @view.route('/flightemployees')
@@ -186,42 +186,42 @@ def list_flightemployees():
 @view.route('/delete/airport/<int:id>')
 def delete_airport(id):
     supabase.table('airport').delete().eq('airportid', id).execute()
-    return redirect(url_for('list_airports'))
+    return redirect(url_for('view.list_airports'))
 
 @view.route('/delete/employee/<int:id>')
 def delete_employee(id):
     supabase.table('employee').delete().eq('employeeid', id).execute()
-    return redirect(url_for('list_employees'))
+    return redirect(url_for('view.list_employees'))
 
 @view.route('/delete/plane/<int:id>')
 def delete_plane(id):
     supabase.table('plane').delete().eq('planeid', id).execute()
-    return redirect(url_for('list_planes'))
+    return redirect(url_for('view.list_planes'))
 
 @view.route('/delete/flight/<int:id>')
 def delete_flight(id):
     supabase.table('flight').delete().eq('flightid', id).execute()
-    return redirect(url_for('list_flights'))
+    return redirect(url_for('view.list_flights'))
 
 @view.route('/delete/passenger/<int:id>')
 def delete_passenger(id):
     supabase.table('passenger').delete().eq('passengerid', id).execute()
-    return redirect(url_for('list_passengers'))
+    return redirect(url_for('view.list_passengers'))
 
 @view.route('/delete/flightschedule/<int:id>')
 def delete_flightschedule(id):
     supabase.table('flightschedule').delete().eq('scheduleid', id).execute()
-    return redirect(url_for('list_flightschedules'))
+    return redirect(url_for('view.list_flightschedules'))
 
 @view.route('/delete/booking/<int:id>')
 def delete_booking(id):
     supabase.table('booking').delete().eq('bookingid', id).execute()
-    return redirect(url_for('list_bookings'))
+    return redirect(url_for('view.list_bookings'))
 
 @view.route('/delete/flightemployee/<int:id>')
 def delete_flightemployee(id):
     supabase.table('flightemployee').delete().eq('flightemployeeid', id).execute()
-    return redirect(url_for('list_flightemployees'))
+    return redirect(url_for('view.list_flightemployees'))
 
 ## Updating the Data
 
@@ -231,7 +231,7 @@ def update_airport(id):
     if request.method == 'POST':
         data = {key: request.form[key] for key in request.form}
         supabase.table('airport').update(data).eq('airportid', id).execute()
-        return redirect(url_for('list_airports'))
+        return redirect(url_for('view.list_airports'))
     else:
         response = supabase.table('airport').select("*").eq('airportid', id).execute()
         if response.data:
@@ -246,7 +246,7 @@ def update_employee(id):
     if request.method == 'POST':
         data = {key: request.form[key] for key in request.form}
         supabase.table('employee').update(data).eq('employeeid', id).execute()
-        return redirect(url_for('list_employees'))
+        return redirect(url_for('view.list_employees'))
     else:
         response = supabase.table('employee').select("*").eq('employeeid', id).execute()
         if response.data:
@@ -261,7 +261,7 @@ def update_plane(id):
     if request.method == 'POST':
         data = {key: request.form[key] for key in request.form}
         supabase.table('plane').update(data).eq('planeid', id).execute()
-        return redirect(url_for('list_planes'))
+        return redirect(url_for('view.list_planes'))
     else:
         response = supabase.table('plane').select("*").eq('planeid', id).execute()
         if response.data:
@@ -276,7 +276,7 @@ def update_flight(id):
     if request.method == 'POST':
         data = {key: request.form[key] for key in request.form}
         supabase.table('flight').update(data).eq('flightid', id).execute()
-        return redirect(url_for('list_flights'))
+        return redirect(url_for('view.list_flights'))
     else:
         response = supabase.table('flight').select("*").eq('flightid', id).execute()
         if response.data:
@@ -291,7 +291,7 @@ def update_passenger(id):
     if request.method == 'POST':
         data = {key: request.form[key] for key in request.form}
         supabase.table('passenger').update(data).eq('passengerid', id).execute()
-        return redirect(url_for('list_passengers'))
+        return redirect(url_for('view.list_passengers'))
     else:
         response = supabase.table('passenger').select("*").eq('passengerid', id).execute()
         if response.data:
@@ -306,7 +306,7 @@ def update_flightschedule(id):
     if request.method == 'POST':
         data = {key: request.form[key] for key in request.form}
         supabase.table('flightschedule').update(data).eq('scheduleid', id).execute()
-        return redirect(url_for('list_flightschedules'))
+        return redirect(url_for('view.list_flightschedules'))
     else:
         response = supabase.table('flightschedule').select("*").eq('scheduleid', id).execute()
         if response.data:
@@ -321,7 +321,7 @@ def update_booking(id):
     if request.method == 'POST':
         data = {key: request.form[key] for key in request.form}
         supabase.table('booking').update(data).eq('bookingid', id).execute()
-        return redirect(url_for('list_bookings'))
+        return redirect(url_for('view.list_bookings'))
     else:
         response = supabase.table('booking').select("*").eq('bookingid', id).execute()
         if response.data:
@@ -340,7 +340,7 @@ def update_flightemployee(flightid, employeeid):
                .eq('flightid', flightid)\
                .eq('employeeid', employeeid)\
                .execute()
-        return redirect(url_for('list_flightemployees'))
+        return redirect(url_for('view.list_flightemployees'))
     else:
         response = supabase.table('flightemployee').select("*")\
                   .eq('flightid', flightid)\
@@ -353,3 +353,10 @@ def update_flightemployee(flightid, employeeid):
                                   primary_key=None)  # No single primary key
         return "Record not found", 404
 
+@view.route('/')
+def landing():
+    return render_template('landing_pg.html')
+
+@view.route('/home')
+def home():
+    return render_template('home.html')

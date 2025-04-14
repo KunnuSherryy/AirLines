@@ -52,12 +52,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
     
-    // CTA buttons event listeners
-    document.querySelectorAll('.cta-button, .cta-button-white').forEach(button => {
-      button.addEventListener('click', function() {
-        alert('Booking system coming soon! Thank you for your interest in ABC Airlines.');
-      });
-    });
     
     // Make features and destination headings animate when scrolled into view
     observer.observe(document.getElementById('features-heading'));

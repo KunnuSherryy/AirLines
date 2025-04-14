@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -321,13 +322,14 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navigation Bar -->
     <nav>
         <div class="navbar">
             <div class="logo">
                 <i class="fas fa-plane"></i>
-                <span>FlightMS</span>
+                <span>ABC Flights</span>
             </div>
             <ul class="nav-links">
                 <li><a href="#">Home</a></li>
@@ -363,7 +365,8 @@
     <section id="tables" class="tables-section">
         <div class="section-header">
             <h2>Database Tables</h2>
-            <p>Explore our database structure with these interconnected tables to manage flights, bookings, passengers, and more.</p>
+            <p>Explore our database structure with these interconnected tables to manage flights, bookings, passengers,
+                and more.</p>
         </div>
         <div class="tables-grid">
             <!-- Flight Table Card -->
@@ -499,7 +502,8 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>About FlightMS</h3>
-                <p>A comprehensive flight management system designed to streamline airline operations, manage bookings, track flights, and maintain passenger information.</p>
+                <p>A comprehensive flight management system designed to streamline airline operations, manage bookings,
+                    track flights, and maintain passenger information.</p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>
@@ -507,7 +511,7 @@
                     <a href="#"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
-            
+
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul class="footer-links">
@@ -518,7 +522,7 @@
                     <li><a href="#">Reports & Analytics</a></li>
                 </ul>
             </div>
-            
+
             <div class="footer-section">
                 <h3>Support</h3>
                 <ul class="footer-links">
@@ -538,20 +542,41 @@
         // Slider functionality
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
-        
+
         function showSlide(n) {
             slides.forEach(slide => slide.classList.remove('active'));
             currentSlide = (n + slides.length) % slides.length;
             slides[currentSlide].classList.add('active');
         }
-        
+
         // Auto-rotate slides
         setInterval(() => {
             showSlide(currentSlide + 1);
         }, 5000);
-        
+
         // Start with first slide
         showSlide(0);
+
+
+        document.querySelectorAll('.table-card').forEach((card, index) => {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', () => {
+                const urls = [
+                    '/flights',
+                    '/bookings',
+                    '/airports',
+                    '/planes',
+                    '/passengers',
+                    '/flightschedules',
+                    '/employees',
+                    '/flightemployees'
+                ];
+                window.location.href = urls[index];
+            });
+        });
+
+
     </script>
 </body>
+
 </html>

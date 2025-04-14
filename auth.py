@@ -11,7 +11,7 @@ db = client["abc_airline_db"]
 user_collection = db["users"]
 
 # Route for signup page
-@auth_bp.route('/', methods=['GET', 'POST'])
+@auth_bp.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
         # Get form data from the signup form
@@ -41,7 +41,7 @@ def signup():
 
         # Handle the response
         if result.inserted_id:
-            return redirect(url_for('auth.login'))  # Redirect to login page after successful signup
+            return redirect(url_for('view.home'))  # Redirect to login page after successful signup
         else:
             return "Error during signup. Please try again."
 

@@ -2,44 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ table_name }} | Flight System</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Tailwind CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>{{ table_name }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
-<body class="bg-gray-100 text-gray-800 min-h-screen p-6">
-    <div class="max-w-7xl mx-auto">
-        <h1 class="text-3xl font-bold mb-6 text-center">{{ table_name }}</h1>
-
-        {% if rows %}
-        <div class="overflow-x-auto shadow-lg rounded-lg border border-gray-300 bg-white">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-100">
-                    <tr>
-                        {% for col in rows[0].keys() %}
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                {{ col }}
-                            </th>
-                        {% endfor %}
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    {% for row in rows %}
-                        <tr class="hover:bg-gray-50">
-                            {% for value in row.values() %}
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                    {{ value }}
-                                </td>
-                            {% endfor %}
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {% else %}
-            <p class="text-center text-gray-500">No data available.</p>
-        {% endif %}
-    </div>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4">{{ table_name }}</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            {% for key in rows[0].keys() %}
+                <th>{{ key }}</th>
+            {% endfor %}
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+              {% for key, value in row.items() %}
+                <td>{{ value }}</td>
+              {% endfor %}
+              <td>
+                {% if table_name == 'Airports' %}
+                  <a href="/delete/airport/{{ row['airportid'] }}">Delete</a>
+                {% elif table_name == 'Employees' %}
+                  <a href="/delete/employee/{{ row['employeeid'] }}">Delete</a>
+                {% elif table_name == 'Planes' %}
+                  <a href="/delete/plane/{{ row['planeid'] }}">Delete</a>
+                {% elif table_name == 'Flights' %}
+                  <a href="/delete/flight/{{ row['flightid'] }}">Delete</a>
+                {% elif table_name == 'Passengers' %}
+                  <a href="/delete/passenger/{{ row['passengerid'] }}">Delete</a>
+                {% elif table_name == 'Flight Schedules' %}
+                  <a href="/delete/flightschedule/{{ row['scheduleid'] }}">Delete</a>
+                {% elif table_name == 'Bookings' %}
+                  <a href="/delete/booking/{{ row['bookingid'] }}">Delete</a>
+                {% elif table_name == 'Flight Employees' %}
+                  <a href="/delete/flightemployee/{{ row['flightemployeeid'] }}">Delete</a>
+                {% endif %}
+              </td>
+              <td>
+                {% if table_name == 'Airports' %}
+                  <a href="/update/airport/{{ row['airportid'] }}">Update</a>
+                {% elif table_name == 'Employees' %}
+                  <a href="/update/employee/{{ row['employeeid'] }}">Update</a>
+                {% elif table_name == 'Planes' %}
+                  <a href="/update/plane/{{ row['planeid'] }}">Update</a>
+                {% elif table_name == 'Flights' %}
+                  <a href="/update/flight/{{ row['flightid'] }}">Update</a>
+                {% elif table_name == 'Passengers' %}
+                  <a href="/update/passenger/{{ row['passengerid'] }}">Update</a>
+                {% elif table_name == 'Flight Schedules' %}
+                  <a href="/update/flightschedule/{{ row['scheduleid'] }}">Update</a>
+                {% elif table_name == 'Bookings' %}
+                  <a href="/update/booking/{{ row['bookingid'] }}">Update</a>
+                {% elif table_name == 'Flight Employees' %}
+                  <a href="/update/flightemployee/{{ row['flightemployeeid'] }}">Update</a>
+                {% endif %}
+              </td>
+              
+            </tr>
+          {% endfor %}
+          
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Updating Information form</title>
+</head>
+<body>
+    <div class="container mt-5">
+  <h2>Update {{ table_name }}</h2>
+  
+  <form method="POST" class="mt-4">
+    {% for key, value in row.items() %}
+      <div class="mb-3">
+        <label for="{{ key }}" class="form-label">{{ key | title }}</label>
+        
+        {% if key.endswith('date') %}
+          <input type="date" class="form-control" name="{{ key }}" id="{{ key }}" value="{{ value }}">
+        {% elif key.endswith('time') %}
+          <input type="time" class="form-control" name="{{ key }}" id="{{ key }}" value="{{ value }}">
+        {% elif key == primary_key %}
+          <input type="text" class="form-control" name="{{ key }}" id="{{ key }}" value="{{ value }}" readonly>
+        {% else %}
+          <input type="text" class="form-control" name="{{ key }}" id="{{ key }}" value="{{ value }}">
+        {% endif %}
+      </div>
+    {% endfor %}
+    
+    <div class="mt-4">
+      <button type="submit" class="btn btn-primary">Update</button>
+      <a href="/tables/{{ table_name.lower() }}" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
+
+      
+</body>
+</html>
